@@ -1,0 +1,168 @@
+"use client";
+
+import React, { useEffect, useContext, useRef, useState } from 'react';
+import { FiMessageSquare } from "react-icons/fi";
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import { FaRegFileImage, FaVideo, FaCode, FaPlus } from "react-icons/fa";
+import { MdDelete, MdAudiotrack } from "react-icons/md";
+import { IoMdText } from "react-icons/io";
+import { GlobalContext } from '@/Contexts/Context';
+import { useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
+
+const Sidebar = () => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const { setinputvalue } = useContext(GlobalContext);
+  const { linkindex, setlinkindex } = useContext(GlobalContext);
+  const { dropdown, setdropdown } = useContext(GlobalContext);
+  const { lino, setlino } = useContext(GlobalContext);
+  const { clicked, setclicked } = useContext(GlobalContext);
+  const { sendbtn, setsendbtn } = useContext(GlobalContext);
+  const { homecontent, sethomecontent } = useContext(GlobalContext);
+  const { sidebarlistactive, setsidebarlistactive } = useContext(GlobalContext);
+  const { conversationdata, setconversationdata, Imagedata, setImagedata, Audiodata, setAudiodata, Videodata, setVideodata, codedata, setcodedata } = useContext(GlobalContext);
+  const pagearray = [conversationdata, Imagedata, Audiodata, Videodata, codedata];
+  const setpagearray = [setconversationdata, setImagedata, setAudiodata, setVideodata, setcodedata];
+  const links = [
+    {
+      name: "Conversation",
+      link: "/Conversation",
+      image: <IoMdText />,
+    },
+    {
+      name: "Image generator",
+      link: "/Imagegenerator",
+      image: <FaRegFileImage />,
+    },
+    {
+      name: "Audio generator",
+      link: "/Audiogenerator",
+      image: <MdAudiotrack />,
+    },
+    {
+      name: "Video generator",
+      link: "/Videogenerator",
+      image: <FaVideo />,
+    },
+    {
+      name: "Code generator",
+      link: "/Codegenerator",
+      image: <FaCode />,
+    },
+  ];
+
+ 
+
+  useEffect(() => {
+    const search = searchParams.get('number');
+    if (search) {
+      setlinkindex(search);
+      setlino(0);
+      setsendbtn(false);
+      setinputvalue("");
+      setsidebarlistactive(-100);
+      setclicked(false)
+    }
+  }, [searchParams]);
+
+  function handledropdown() {
+    setdropdown(!dropdown);
+  }
+
+  function handlelinkclick(index) {
+    setdropdown(false);
+    setclicked(false)
+    router.push(`${links[index].link}?number=${index}`);
+  }
+
+  function handleliclick(index, event) {
+    setlino(index);
+    setclicked(false);
+    sethomecontent(false);
+    setsendbtn(true);
+    setsidebarlistactive(index);
+  }
+
+  function handlenewbuttonclick() {
+    setsidebarlistactive(-100);
+    setlino(0);
+    sethomecontent(true);
+    setclicked(false);
+    setsendbtn(false);
+  }
+
+  function deletelistitem(index) {
+    setlino(0);
+    setclicked(true);
+    sethomecontent(true);
+    setsendbtn(false);
+    setsidebarlistactive(-100);
+    const updatedarray = pagearray[linkindex].filter((item, indx) => indx !== index);
+    setpagearray[linkindex](updatedarray);
+  }
+
+  return ( <>
+  {clicked ?
+  <div className={`transition-transform duration-300 transform absolute translate-x-0 z-20 top-0 pt-20 pb-4 h-screen w-[85%] bg-slate-700 text-white sm:w-[50%] sm:pt-20 md:w-[40%] lg:w-[30%]`}>
+  <div className='px-5 flex flex-col gap-6 h-full'>
+    <div className='flex justify-between'>
+      <p className='flex items-center gap-3 text-xl'>Model</p>
+    </div>
+    <span onClick={handledropdown} className='w-fit flex gap-6 items-center border-2 border-gray-500 p-2 text-lg'>
+      {linkindex !== -1 ? (
+        <>
+          {links[linkindex].image}
+          {links[linkindex].name}
+        </>
+      ) : "Select a model"}
+      {dropdown ? <IoIosArrowUp /> : <IoIosArrowDown /> }
+      
+    </span>
+    <div className={dropdown === true ? 'flex flex-col border-solid border-gray-800 gap-1' : 'hidden'}>
+      {links.map((data, index) => (
+        <div key={index} className={`flex gap-3 items-center text-lg rounded-2xl p-3 border-2 ${linkindex !== -1 && linkindex == index ? "border-green-500" : "border-gray-500"}`} onClick={() => handlelinkclick(index)}>
+          {data.image}
+          {data.name}
+        </div>
+      ))}
+    </div>
+    <div>
+      <div className='flex flex-col gap-4'>
+        <div onClick={handlenewbuttonclick} className='flex items-center gap-3 p-2 border-2 rounded-lg w-fit border-gray-500'>
+          <FaPlus />
+          <p>New Chat</p>
+        </div>
+      </div>
+    </div>
+    {linkindex !== -1 ? (
+      <>
+        <p className='text-lg'>Recent</p>
+        <div className='flex-grow overflow-auto pb-2'>
+          <ul className='flex flex-col gap-2'>
+            {pagearray[linkindex].map((data, index) => (
+              <div key={index} className={`w-full flex items-center justify-between gap-3 px-2 rounded-xl hover:cursor-pointer hover:border hover:border-gray-500 ${sidebarlistactive == index ?  "border border-green-500" : null}`}>
+                <div onClick={(event) => handleliclick(index, event)} className='flex flex-grow gap-3 items-center overflow-hidden'>
+                  <FiMessageSquare className='text-xl flex-shrink-0' />
+                  <p>{data.data[0].question}</p>
+                </div>
+                <button className='py-2' onClick={() => deletelistitem(index)}>
+                  <MdDelete className='text-md ' />
+                </button>
+              </div>
+            ))}
+          </ul>
+        </div>
+      </>
+    ) : null}
+  </div>
+</div>
+  
+  :null}
+  
+  </>
+      
+  );
+};
+
+export default Sidebar;
