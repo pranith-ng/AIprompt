@@ -6,7 +6,7 @@ import Ailogo from "@/components/Ailogo"
 import Userlogo from "@/components/Userlogo";
 
 
-const Page = () => {
+const Imagegenerator = () => {
 
   const { Imagedata, setImagedata } = useContext(GlobalContext)
   const { lino, setlino } = useContext(GlobalContext)
@@ -120,4 +120,4 @@ const Page = () => {
   )
 }
 
-export default Page
+export default Imagegenerator

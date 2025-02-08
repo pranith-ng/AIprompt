@@ -4,7 +4,7 @@ import { GlobalContext } from '@/Contexts/Context'
 import React, { useContext, useRef, useEffect } from 'react'
 
 
-const Page = () => {
+const Videogenerator = () => {
 
   const {Videodata, setVideodata} = useContext(GlobalContext)
   const { lino, setlino } = useContext(GlobalContext)
@@ -100,4 +100,4 @@ const Page = () => {
   )
 }
 
-export default Page
+export default Videogenerator
