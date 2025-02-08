@@ -14,7 +14,6 @@ const Page = () => {
   const { linkindex, setlinkindex } = useContext(GlobalContext)
   const { inputvalue, setinputvalue } = useContext(GlobalContext)
   const { sidebarlistactive, setsidebarlistactive } = useContext(GlobalContext)
-  const { clicked } = useContext(GlobalContext)
 
 
   const containerRef = useRef(null);

@@ -9,7 +9,7 @@ import { gemini } from "@/app/utils/gemini"
 import { auth } from "@/app/firebase/firebase";
 import { onAuthStateChanged } from "firebase/auth"
 import { useRouter } from "next/navigation";
-import {createfirestorepath, firestoredatastorage} from "@/components/Firestore"
+import {createfirestorepath} from "@/components/Firestore"
 
 
 

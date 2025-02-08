@@ -2,7 +2,6 @@
 
 import { GlobalContext } from '@/Contexts/Context'
 import React, { useContext, useRef, useEffect } from 'react'
-import Homelogo from '@/components/homelogo'
 
 
 const Page = () => {
