@@ -13,6 +13,7 @@ import { useSearchParams } from "next/navigation";
 const Sidebar = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const {authuser, setauthuser} = useContext(GlobalContext)
   const { setinputvalue } = useContext(GlobalContext);
   const { linkindex, setlinkindex } = useContext(GlobalContext);
   const { dropdown, setdropdown } = useContext(GlobalContext);
@@ -54,6 +55,12 @@ const Sidebar = () => {
   ];
 
 
+    useEffect(() => {
+      const saveduser = sessionStorage.getItem('user');
+      if (saveduser) {
+        setauthuser(JSON.parse(saveduser));
+      }
+    }, []);
 
   useEffect(() => {
     const search = searchParams.get('number');
@@ -149,7 +156,7 @@ const Sidebar = () => {
           </div>
         </div>
           
-          {linkindex !== -1 ? (
+          {linkindex !== -1  && authuser !== null ?(
             <>
             <p className='text-lg mt-6 mb-1'>Recent</p>
           <div className='h-full flex flex-col gap-2 overflow-auto pr-6 lg:pr-4'>

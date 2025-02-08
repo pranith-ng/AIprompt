@@ -38,10 +38,13 @@ export const GlobalContextProvider = ({ children }) => {
   const [Videodata, setVideodata] = useState([ ])
   const [codedata, setcodedata] = useState([ ])
 
+  const [ authuser, setauthuser ] = useState(null)
+  const [userfirstletter, setuserfirstletter] = useState("")
+
 
 
   return (
-    <GlobalContext.Provider value={{ lino, setlino, dropdown, setdropdown, clicked, setclicked, sendbtn, setsendbtn, homecontent, sethomecontent, sidebarlistactive, setsidebarlistactive, inputvalue, setinputvalue, currentActiveIndex, setCurrentActiveIndex, linkindex, setlinkindex, linkchange, setlinkchange, conversationdata, setconversationdata, Imagedata, setImagedata, Audiodata, setAudiodata, Videodata, setVideodata, codedata, setcodedata, rotationg, setrotating, childlistno, setchildlistno,}}>
+    <GlobalContext.Provider value={{ lino, setlino, dropdown, setdropdown, clicked, setclicked, sendbtn, setsendbtn, homecontent, sethomecontent, sidebarlistactive, setsidebarlistactive, inputvalue, setinputvalue, currentActiveIndex, setCurrentActiveIndex, linkindex, setlinkindex, linkchange, setlinkchange, conversationdata, setconversationdata, Imagedata, setImagedata, Audiodata, setAudiodata, Videodata, setVideodata, codedata, setcodedata, rotationg, setrotating, childlistno, setchildlistno, authuser, setauthuser, userfirstletter, setuserfirstletter}}>
       {children}
     </GlobalContext.Provider>
   )
