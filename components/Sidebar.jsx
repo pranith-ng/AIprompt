@@ -13,7 +13,7 @@ import { useSearchParams } from "next/navigation";
 const Sidebar = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const {authuser, setauthuser} = useContext(GlobalContext)
+  const { authuser, setauthuser } = useContext(GlobalContext)
   const { setinputvalue } = useContext(GlobalContext);
   const { linkindex, setlinkindex } = useContext(GlobalContext);
   const { dropdown, setdropdown } = useContext(GlobalContext);
@@ -55,21 +55,23 @@ const Sidebar = () => {
   ];
 
 
-    useEffect(() => {
-      const saveduser = sessionStorage.getItem('user');
-      if (saveduser) {
-        setauthuser(JSON.parse(saveduser));
-      }
-    }, []);
+  useEffect(() => {
+    const saveduser = sessionStorage.getItem('user');
+    if (saveduser) {
+      setauthuser(JSON.parse(saveduser));
+    }
+  }, []);
 
   useEffect(() => {
-    const search = searchParams.get('number');
-    if (search) {
-      setlinkindex(search);
-      setlino(0);
-      setsendbtn(false);
-      setinputvalue("");
-      setsidebarlistactive(-100);
+    if (typeof window !== "undefined") {
+      const search = searchParams.get("number");
+      if (search) {
+        setlinkindex(search);
+        setlino(0);
+        setsendbtn(false);
+        setinputvalue("");
+        setsidebarlistactive(-100);
+      }
     }
   }, [searchParams]);
 
@@ -155,11 +157,11 @@ const Sidebar = () => {
             </div>
           </div>
         </div>
-          
-          {linkindex !== -1  && authuser !== null ?(
-            <>
+
+        {linkindex !== -1 && authuser !== null ? (
+          <>
             <p className='text-lg mt-6 mb-1'>Recent</p>
-          <div className='h-full flex flex-col gap-2 overflow-auto pr-6 lg:pr-4'>
+            <div className='h-full flex flex-col gap-2 overflow-auto pr-6 lg:pr-4'>
               <div className='flex flex-col'>
                 {pagearray[linkindex].map((data, index) => (
                   <div onMouseEnter={() => handleMouseEnter(index)} onMouseLeave={handleMouseLeave} key={index} className={`w-full flex items-center justify-between gap-3 rounded-full hover:cursor-pointer hover:bg-gray-500 ${sidebarlistactive == index ? "bg-green-500" : null}`}>
@@ -176,10 +178,10 @@ const Sidebar = () => {
                   </div>
                 ))}
               </div>
-              </div>
-              </>) : null}
-          
-       
+            </div>
+          </>) : null}
+
+
       </div>
     </div>
 
