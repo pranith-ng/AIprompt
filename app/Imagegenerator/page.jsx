@@ -6,7 +6,7 @@ import Ailogo from "@/components/Ailogo"
 import Userlogo from "@/components/Userlogo";
 
 
-const page = () => {
+const Page = () => {
 
   const { Imagedata, setImagedata } = useContext(GlobalContext)
   const { lino, setlino } = useContext(GlobalContext)
@@ -121,4 +121,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

@@ -5,7 +5,7 @@ import React, { useContext, useRef, useEffect } from 'react'
 import Homelogo from '@/components/homelogo'
 
 
-const page = () => {
+const Page = () => {
 
   const {Videodata, setVideodata} = useContext(GlobalContext)
   const { lino, setlino } = useContext(GlobalContext)
@@ -101,4 +101,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

@@ -11,7 +11,7 @@ import { createfirestorepath } from "@/components/Firestore"
 
 
 
-const page = () => {
+const Page = () => {
 
   const { codedata, setcodedata } = useContext(GlobalContext)
   const { lino, setlino } = useContext(GlobalContext)
@@ -178,4 +178,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

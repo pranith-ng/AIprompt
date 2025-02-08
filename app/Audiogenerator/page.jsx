@@ -7,7 +7,7 @@ import Userlogo from "@/components/Userlogo";
 
 
 
-const page = () => {
+const Page = () => {
 
   const { Audiodata, setAudiodata } = useContext(GlobalContext)
   const { lino, setlino } = useContext(GlobalContext)
@@ -106,4 +106,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page
