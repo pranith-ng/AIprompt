@@ -41,7 +41,7 @@ const Imagegenerator = () => {
     if (sidebarlistactive === -100 & inputvalue !== "") {
       setImagedata(prev => [{
         data: [
-          { question: `${inputvalue}`, answer: "new array answer" }
+          { question: `${inputvalue}`, answer: "The Image Generator, Audio Generator, and Video Generator are currently unavailable as the API now requires a paid subscription"  }
         ]
       }, ...prev])
       setsidebarlistactive(0)
@@ -57,7 +57,7 @@ const Imagegenerator = () => {
           ...newState[sidebarlistactive],
           data: [
             ...newState[sidebarlistactive].data,
-            { question: `${inputvalue}`, answer: "nestedinputanswe" }
+            { question: `${inputvalue}`, answer: "The Image Generator, Audio Generator, and Video Generator are currently unavailable as the API now requires a paid subscription" }
           ]
         };
         return newState;
@@ -104,17 +104,7 @@ const Imagegenerator = () => {
     </>
   ) : null
 }
-
-
-
-
-
         </div>
-        
-       
-
-       
-        
       </div>
     </div>
   )
