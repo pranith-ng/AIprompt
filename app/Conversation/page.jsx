@@ -9,7 +9,7 @@ import { gemini } from "@/app/utils/gemini"
 import { auth } from "@/app/firebase/firebase";
 import { onAuthStateChanged } from "firebase/auth"
 import { useRouter } from "next/navigation";
-import {createfirestorepath} from "@/components/Firestore"
+import { createfirestorepath } from "@/components/Firestore"
 
 
 
@@ -26,7 +26,7 @@ export default function Conversation() {
   const { conversationdata, setconversationdata } = useContext(GlobalContext)
   const { childlistno, setchildlistno } = useContext(GlobalContext)
   const { rotationg, setrotating, } = useContext(GlobalContext)
-  const { authuser, setauthuser } = useContext(GlobalContext)
+  const { authuser, setauthuser, setuserfirstletter } = useContext(GlobalContext)
 
   const [inputheigt, setinputheight] = useState("0")
 
@@ -59,6 +59,9 @@ export default function Conversation() {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setauthuser(currentUser); // Set user state when auth state changes
+      const firstletter = currentUser?.email
+      const firstletterwithcap = firstletter.charAt(0).toUpperCase()
+      setuserfirstletter(firstletterwithcap)
     });
 
     return () => unsubscribe(); // Cleanup listener on unmount
@@ -163,8 +166,8 @@ export default function Conversation() {
               {conversationdata[lino].data.map((item, index) => (
                 <>
                   <div key={index} className="px-2 py-6 flex flex-col gap-4 ">
-                    <div className="flex flex-col gap-4 md:items-center md:flex md:flex-row md:gap-6 "><Userlogo /> <div className="w-[98%] text-gray-600 break-words md:w-[88%] lg:w-[92%]">{item.question}</div></div>
-                    <div className="flex flex-col gap-4 md:flex md:flex-row md:gap-6 "><Ailogo indexno={index} /> <div dangerouslySetInnerHTML={{ __html: item.answer }} className="w-[98%] md:w-[88%] lg:w-[92%] leading-9"></div></div>
+                    <div className="flex items-center gap-4 md:gap-6 "><Userlogo /> <div className="w-[80%] text-gray-600 break-words md:w-[88%] lg:w-[92%]">{item.question}</div></div>
+                    <div className="flex gap-4 md:gap-6 "><Ailogo indexno={index} /> <div dangerouslySetInnerHTML={{ __html: item.answer }} className="w-[98%] md:w-[88%] lg:w-[92%] leading-9"></div></div>
                   </div>
                 </>
               ))}

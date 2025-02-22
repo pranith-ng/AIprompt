@@ -22,7 +22,7 @@ const Codegenerator = () => {
   const { childlistno, setchildlistno } = useContext(GlobalContext)
 
   const { rotationg, setrotating, } = useContext(GlobalContext)
-  const { authuser, setauthuser, } = useContext(GlobalContext)
+  const { authuser, setauthuser, setuserfirstletter } = useContext(GlobalContext)
 
 
   const containerRef = useRef(null);
@@ -41,12 +41,16 @@ const Codegenerator = () => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setauthuser(currentUser); // Set user state when auth state changes
+      const firstletter = currentUser?.email
+      const firstletterwithcap = firstletter.charAt(0).toUpperCase()
+      setuserfirstletter(firstletterwithcap)
+
     });
 
     return () => unsubscribe(); // Cleanup listener on unmount
   }, [auth]);
 
-  
+
 
   async function handlesendclick() {
 
@@ -141,8 +145,8 @@ const Codegenerator = () => {
                     {codedata[lino].data.map((item, index) => (
                       <>
                         <div key={index} className="px-2 py-6 flex flex-col gap-4 ">
-                          <div className="flex flex-col gap-4 md:flex md:flex-row md:gap-6 "><Userlogo /> <div className="w-[98%] break-words md:w-[88%] lg:w-[92%]">{item.question}</div></div>
-                          <div className="flex flex-col gap-4 md:flex md:flex-row md:gap-6 "><Ailogo indexno={index} /> <div dangerouslySetInnerHTML={{ __html: item.answer }} className="w-[98%] md:w-[88%] lg:w-[92%] leading-9"></div></div>
+                          <div className="flex gap-4 items-center md:gap-6 "><Userlogo /> <div className="w-[80%] break-words md:w-[88%] lg:w-[92%]">{item.question}</div></div>
+                          <div className="flex gap-4 md:gap-6 "><Ailogo indexno={index} /> <div dangerouslySetInnerHTML={{ __html: item.answer }} className="w-[98%] md:w-[88%] lg:w-[92%] leading-9"></div></div>
                         </div>
 
                       </>
@@ -173,8 +177,8 @@ const Codegenerator = () => {
           </div>
         </div>
       )
-    
-    
+
+
   )
 }
 
